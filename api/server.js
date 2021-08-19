@@ -16,12 +16,14 @@ mongoose.connect("mongodb://127.0.0.1:27017/mern-todo", {
 
 const Todo = require('./models/Todo');
 
+// get list of todos
 app.get('/todos', async ( req, res) => {
     const todos = await Todo.find();
 
     res.json(todos);
 });
 
+// add new todo
 app.post('/todo/new', (req, res) => {
     const todo = new Todo({
         text: req.body.text
@@ -32,12 +34,14 @@ app.post('/todo/new', (req, res) => {
     res.json(todo);
 });
 
+// delete todo
 app.delete('/todo/delete/:id', async (req, res) => {
     const result = await Todo.findByIdAndDelete(req.params.id);
 
     res.json(result);
 });
 
+// update (change to complete)
 app.put('/todos/complete/:id', async (req, res) => {
     const todo = await Todo.findById(req.params.id);
 
